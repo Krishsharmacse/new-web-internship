@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Closira Enquiry Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="glass-header">
+            <div class="logo">
+                <i class="fa-solid fa-headset"></i> Closira<span>Sync</span>
+            </div>
+            <div class="status-indicator">
+                <span class="pulse"></span> API Connected
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Create Enquiry Section -->
+            <section class="glass-card section-create">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-plus-circle"></i> New Enquiry</h2>
+                </div>
+                <form id="create-enquiry-form">
+                    <div class="form-group">
+                        <label for="channel">Channel</label>
+                        <select id="channel" required>
+                            <option value="whatsapp">WhatsApp</option>
+                            <option value="email">Email</option>
+                            <option value="instagram">Instagram</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer_name">Customer Name</label>
+                        <input type="text" id="customer_name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="4" placeholder="Type customer issue here... (Try words like 'price', 'book', 'broken')" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <span>Submit Enquiry</span> <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Actions Section -->
+            <section class="glass-card section-actions">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-bolt"></i> Quick Actions</h2>
+                </div>
+                
+                <div class="action-block">
+                    <label>Target Enquiry ID</label>
+                    <div class="input-with-button">
+                        <input type="text" id="target_id" placeholder="e.g. 64a7b...">
+                        <button id="btn-fetch" class="btn-icon" title="Fetch History"><i class="fa-solid fa-search"></i></button>
+                    </div>
+                </div>
+
+                <div class="action-grid">
+                    <button class="btn-secondary" id="btn-escalate" onclick="openModal('escalate-modal')">
+                        <i class="fa-solid fa-arrow-trend-up"></i> Escalate
+                    </button>
+                    <button class="btn-secondary" id="btn-followup" onclick="openModal('followup-modal')">
+                        <i class="fa-solid fa-clock-rotate-left"></i> Follow Up
+                    </button>
+                </div>
+            </section>
+
+            <!-- History / Output Section -->
+            <section class="glass-card section-history">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-timeline"></i> Enquiry Logs & History</h2>
+                    <button class="btn-sm" id="btn-clear-logs" onclick="clearLogs()"><i class="fa-solid fa-trash"></i></button>
+                </div>
+                <div class="logs-container" id="logs-container">
+                    <div class="log-entry system-msg">
+                        System ready. Awaiting actions...
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="escalate-modal" class="modal-overlay">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3>Escalate Enquiry</h3>
+                <button class="btn-close" onclick="closeModal('escalate-modal')"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="form-group">
+                <label for="escalate_reason">Reason for Escalation</label>
+                <input type="text" id="escalate_reason" placeholder="Requires manager approval...">
+            </div>
+            <button class="btn-danger w-100" onclick="submitEscalation()">Confirm Escalation</button>
+        </div>
+    </div>
+
+    <div id="followup-modal" class="modal-overlay">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3>Schedule Follow-Up</h3>
+                <button class="btn-close" onclick="closeModal('followup-modal')"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="form-group">
+                <label for="delay_minutes">Delay (minutes)</label>
+                <input type="number" id="delay_minutes" value="5" min="1">
+            </div>
+            <div class="form-group">
+                <label for="message_template">Message Template</label>
+                <textarea id="message_template" rows="3" placeholder="Just checking in..."></textarea>
+            </div>
+            <button class="btn-primary w-100" onclick="submitFollowUp()">Schedule</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
