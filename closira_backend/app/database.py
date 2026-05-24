@@ -6,7 +6,7 @@ engine = create_engine(
     settings.database_url, connect_args={"check_same_thread": False}
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
+# ado dotnet
 def get_db():
     db = SessionLocal()
     try:
